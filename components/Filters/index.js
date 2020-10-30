@@ -4,11 +4,11 @@ const Filters = ({filterName, data, selected, handleChange}) => {
       <div>
         <label htmlFor={filterName}>Choose a car:</label>
         <select name={filterName} id={filterName} onChange={handleChange}>
-          <option value="">
-            Select a {filterName}...
-          </option>
+          <option value="">Select a {filterName}...</option>
           {data.map(item => (
-            <option key={item.id} value={item.id}>{item.name}</option>
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
           ))}
         </select>
       </div>

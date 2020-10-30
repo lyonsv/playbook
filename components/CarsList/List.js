@@ -1,8 +1,10 @@
+import ClipLoader from 'react-spinners/ClipLoader';
 import {List as Container, Item} from './styles';
 import Car from '../Car';
+import {light} from '../../styles/colors';
 
-const List = ({cars}) => {
-  if (cars) {
+const List = ({cars, loading}) => {
+  if (!loading && cars) {
     return (
       <Container>
         {cars.map(car => (
@@ -12,6 +14,10 @@ const List = ({cars}) => {
         ))}
       </Container>
     );
+  }
+
+  if (loading) {
+    return <ClipLoader size={25} color={light} />;
   }
 
   return null;

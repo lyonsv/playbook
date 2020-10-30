@@ -1,12 +1,22 @@
 import App from '../components/App';
+import {makesList} from '../services/makes';
 import CarsList from '../components/CarsList';
 
-const Home = () => {
+const Home = ({makes}) => {
   return (
     <App>
-      <CarsList />
+      <CarsList makes={makes} />
     </App>
   );
 };
 
-export default Home
+export async function getStaticProps() {
+  const makes = await makesList();
+  return {
+    props: {
+      makes: makes.data,
+    },
+  };
+}
+
+export default Home;

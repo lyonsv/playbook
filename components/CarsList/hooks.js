@@ -1,20 +1,19 @@
 import {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
-import {makesList} from '../../services/makes';
 import {makesModelsList} from '../../services/models';
 import {carsList} from '../../services/cars';
 
-const useCars = () => {
+const useCars = makes => {
   const [values, setValues] = useState({
     make: '',
     model: '',
   });
   const [models, setModels] = useState(null);
-  const [makes, setMakes] = useState(null);
   const [cars, setCars] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(null);
 
   const loadCars = async () => {
+    setLoading(true);
     try {
       const response = await carsList(values.make, values.model);
 
@@ -23,6 +22,7 @@ const useCars = () => {
       } else {
         toast.error(`An api error occured with status: ${response.status}`);
       }
+      setLoading(false);
     } catch (err) {
       console.log(err);
       toast.error(`An error occured in the client.`);
@@ -44,21 +44,6 @@ const useCars = () => {
     }
   };
 
-  const loadMakes = async () => {
-    try {
-      const response = await makesList();
-      if (response.ok) {
-        setMakes(response.data);
-        setLoading(false);
-      } else {
-        toast.error(`An api error occured with status: ${response.status}`);
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error(`An error occured in the client.`);
-    }
-  };
-
   const handleChange = event => {
     event.persist();
     setValues(values => ({
@@ -66,10 +51,6 @@ const useCars = () => {
       [event.target.name]: event.target.value,
     }));
   };
-
-  useEffect(() => {
-    loadMakes();
-  }, []);
 
   useEffect(() => {
     if (values.make) {
@@ -84,7 +65,6 @@ const useCars = () => {
   }, [values.model]);
 
   return {
-    makes,
     models,
     handleChange,
     values,

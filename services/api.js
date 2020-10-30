@@ -1,7 +1,7 @@
-import { create } from 'apisauce'
+import {create} from 'apisauce';
 
 const baseApi = create({
-  baseURL: "http://localhost:8000/api/v1/",
+  baseURL: 'https://obscure-temple-32503.herokuapp.com/api/v1/',
   headers: {
     Accept: 'application/json',
     'Cache-Control': 'no-cache',
@@ -10,12 +10,12 @@ const baseApi = create({
     'X-Permitted-Cross-Domain-Policies': 'none',
   },
   timeout: 1200000,
-})
+});
 
 const createApi = () => {
-  return baseApi
-}
+  return baseApi;
+};
 
-const api = createApi()
+const api = createApi();
 
-export default api
+export default api;

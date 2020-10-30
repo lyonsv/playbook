@@ -1,12 +1,11 @@
 import App from '../components/App';
 import {makesList} from '../services/makes';
 import CarsList from '../components/CarsList';
+import ErrorMessage from '../components/ErrorMessage';
 
 const Home = ({makes}) => {
   return (
-    <App>
-      <CarsList makes={makes} />
-    </App>
+    <App>{makes.length ? <CarsList makes={makes} /> : <ErrorMessage />}</App>
   );
 };
 

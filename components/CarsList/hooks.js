@@ -1,11 +1,6 @@
 import {useEffect, useState} from 'react';
 import {makesList} from '../../services/makes';
-
-const MAKES_MODELS = {
-  toyota: ['prius', 'camry', 'corolla'],
-  ford: ['taurus', 'f-150', 'crown victoria'],
-  volvo: ['taurus', 'f-150', 'crown victoria'],
-};
+import {makesModelsList} from '../../services/models';
 
 const useCars = () => {
   const [models, setModels] = useState();
@@ -15,20 +10,30 @@ const useCars = () => {
   const [loading, setLoading] = useState(true);
   const [loadingModels, setLoadingModels] = useState(true);
 
+  const loadModels = async (makeId) => {
+    try {
+      const response = await makesModelsList(makeId)
+      setModels(response.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const handleChange = event => {
     setSelectedMake(event.target.value);
-    setModels(MAKES_MODELS[selectedMake]);
+    loadModels(event.target.value)
+    setLoadingModels(false)
   };
 
   const handleChangeModel = event => {
     setSelectedModel(event.target.value);
-    setLoadingModels(false)
   };
 
   useEffect(() => {
     const loadMakes = async () => {
       try {
-        setMakes(['volvo', 'toyota', 'ford']);
+        const response = await makesList()
+        setMakes(response.data);
         setLoading(false);
       } catch (err) {
         console.log(err);

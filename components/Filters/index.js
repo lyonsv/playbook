@@ -1,19 +1,18 @@
-const Filters = ({makes, loading, selectedMake, handleChange}) => {
-  if (!loading && makes) {
+const Filters = ({filterName, data, loading, selected, handleChange}) => {
+  if (data) {
     return (
-      <>
-        {selectedMake && <h1>{selectedMake}</h1>}
-        <label for="cars">Choose a car:</label>
-        <select name="cars" id="cars" onChange={handleChange}>
-          {makes.map(make => (
-            <option value={make}>{make}</option>
+      <div>
+        <label for={filterName}>Choose a car:</label>
+        <select name={filterName} id={filterName} onChange={handleChange}>
+          {data.map(item => (
+            <option value={item.id}>{item.name}</option>
           ))}
         </select>
-      </>
+      </div>
     );
   }
 
-  return <p>Loading...</p>;
+  return null;
 };
 
 export default Filters;

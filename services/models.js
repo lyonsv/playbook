@@ -1,3 +1,5 @@
-import api from './api'
+import api from './api';
 
-const modelsList = () => api.get("models")
+const makesModelsList = (makeId) => api.get(`/makes/${makeId}/car_models`);
+
+export {makesModelsList};

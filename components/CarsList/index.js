@@ -1,24 +1,44 @@
+import ClipLoader from 'react-spinners/ClipLoader';
 import Filters from '../Filters';
 import useCars from './hooks';
 import {Container} from './styles';
 
 const CarsList = () => {
-  const {makes, models, loading, handleChange, selectedMake, handleChangeModel, selectedModel, loadingModels} = useCars();
+  const {
+    makes,
+    models,
+    loading,
+    handleChange,
+    selectedMake,
+    handleChangeModel,
+    selectedModel,
+    loadingModels,
+  } = useCars();
+
+  if (!loading) {
+    return (
+      <Container>
+        <Filters
+          filterName="make"
+          loading={loading}
+          data={makes}
+          selected={selectedMake}
+          handleChange={handleChange}
+        />
+        <Filters
+          filterName="model"
+          loading={loadingModels}
+          data={models}
+          selected={selectedModel}
+          handleChange={handleChangeModel}
+        />
+      </Container>
+    );
+  }
 
   return (
     <Container>
-      <Filters
-        loading={loading}
-        makes={makes}
-        selectedMake={selectedMake}
-        handleChange={handleChange}
-      />
-        <Filters
-          loading={loadingModels}
-          makes={models}
-          selectedMake={selectedModel}
-          handleChange={handleChangeModel}
-        />
+      <ClipLoader size={25} color={'#123abc'} />
     </Container>
   );
 };

@@ -1,56 +1,71 @@
 import {useEffect, useState} from 'react';
+import {toast} from 'react-toastify';
 import {makesList} from '../../services/makes';
 import {makesModelsList} from '../../services/models';
 
 const useCars = () => {
-  const [models, setModels] = useState();
-  const [makes, setMakes] = useState();
-  const [selectedMake, setSelectedMake] = useState();
-  const [selectedModel, setSelectedModel] = useState();
+  const [values, setValues] = useState({
+    make: '',
+    model: '',
+  });
+  const [models, setModels] = useState(null);
+  const [makes, setMakes] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [loadingModels, setLoadingModels] = useState(true);
 
-  const loadModels = async (makeId) => {
+  const loadModels = async () => {
     try {
-      const response = await makesModelsList(makeId)
-      setModels(response.data)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+      const response = await makesModelsList(values.make);
 
-  const handleChange = event => {
-    setSelectedMake(event.target.value);
-    loadModels(event.target.value)
-    setLoadingModels(false)
+      if (response.ok) {
+        setModels(response.data);
+      } else {
+        toast.error(`An api error occured with status: ${response.status}`);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(`An error occured in the client.`);
+    }
   };
 
-  const handleChangeModel = event => {
-    setSelectedModel(event.target.value);
+  const loadMakes = async () => {
+    try {
+      const response = await makesList();
+      if (response.ok) {
+        setMakes(response.data);
+        setLoading(false)
+      } else {
+        toast.error(`An api error occured with status: ${response.status}`);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(`An error occured in the client.`);
+    }
+  };
+
+  const handleChange = event => {
+    event.persist();
+    setValues(values => ({
+      ...values,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   useEffect(() => {
-    const loadMakes = async () => {
-      try {
-        const response = await makesList()
-        setMakes(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     loadMakes();
   }, []);
+
+  useEffect(() => {
+    if (values.make) {
+      loadModels()
+    }
+  }, [values.make])
 
   return {
     makes,
     models,
     handleChange,
-    selectedMake,
-    selectedModel,
-    handleChangeModel,
-    loadingModels
+    values,
+    loading,
   };
 };
 

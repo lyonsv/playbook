@@ -1,11 +1,14 @@
-const Filters = ({filterName, data, loading, selected, handleChange}) => {
+const Filters = ({filterName, data, selected, handleChange}) => {
   if (data) {
     return (
       <div>
-        <label for={filterName}>Choose a car:</label>
+        <label htmlFor={filterName}>Choose a car:</label>
         <select name={filterName} id={filterName} onChange={handleChange}>
+          <option value="">
+            Select a {filterName}...
+          </option>
           {data.map(item => (
-            <option value={item.id}>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
           ))}
         </select>
       </div>

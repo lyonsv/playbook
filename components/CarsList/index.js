@@ -9,10 +9,7 @@ const CarsList = () => {
     models,
     loading,
     handleChange,
-    selectedMake,
-    handleChangeModel,
-    selectedModel,
-    loadingModels,
+    values,
   } = useCars();
 
   if (!loading) {
@@ -20,17 +17,15 @@ const CarsList = () => {
       <Container>
         <Filters
           filterName="make"
-          loading={loading}
           data={makes}
-          selected={selectedMake}
+          selected={values.make}
           handleChange={handleChange}
         />
         <Filters
           filterName="model"
-          loading={loadingModels}
           data={models}
-          selected={selectedModel}
-          handleChange={handleChangeModel}
+          selected={values.model}
+          handleChange={handleChange}
         />
       </Container>
     );

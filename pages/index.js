@@ -1,6 +1,8 @@
-import Head from 'next/head'
-import CarsList from '../components/CarsList'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import CarsList from '../components/CarsList';
+import {ToastContainer} from 'react-toastify';
+import styles from '../styles/Home.module.css';
+ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   return (
@@ -10,6 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CarsList />
+      <ToastContainer />
     </div>
-  )
+  );
 }

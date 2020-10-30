@@ -1,17 +1,19 @@
+import {Container, Label, Select, Option} from './styles';
+
 const Filters = ({filterName, data, selected, handleChange}) => {
   if (data) {
     return (
-      <div>
-        <label htmlFor={filterName}>Choose a car:</label>
-        <select name={filterName} id={filterName} onChange={handleChange}>
-          <option value="">Select a {filterName}...</option>
+      <Container>
+        <Label htmlFor={filterName}>Choose a {filterName}:</Label>
+        <Select name={filterName} id={filterName} onChange={handleChange}>
+          <Option value="">Select a {filterName}...</Option>
           {data.map(item => (
-            <option key={item.id} value={item.id}>
+            <Option key={item.id} value={item.id}>
               {item.name}
-            </option>
+            </Option>
           ))}
-        </select>
-      </div>
+        </Select>
+      </Container>
     );
   }
 

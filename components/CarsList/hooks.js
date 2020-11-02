@@ -14,6 +14,7 @@ const useCars = makes => {
 
   const loadCars = async () => {
     setLoading(true);
+
     try {
       const response = await carsList(values.make, values.model);
 
@@ -22,10 +23,11 @@ const useCars = makes => {
       } else {
         toast.error(`An api error occured with status: ${response.status}`);
       }
-      setLoading(false);
     } catch (err) {
       console.log(err);
       toast.error(`An error occured in the client.`);
+    } finally {
+      setLoading(false);
     }
   };
 

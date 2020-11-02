@@ -3,7 +3,8 @@ import {xLight, gray4} from '../../styles/colors';
 import {H3, H5} from '../../styles/typography';
 
 const Container = styled.div`
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   background: ${xLight};
   border-radius: 5px;
   padding: 2rem;

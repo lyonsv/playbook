@@ -32,6 +32,8 @@ const useCars = makes => {
   };
 
   const loadModels = async () => {
+    setLoading(true);
+
     try {
       const response = await makesModelsList(values.make);
 
@@ -43,6 +45,8 @@ const useCars = makes => {
     } catch (err) {
       console.log(err);
       toast.error(`An error occured in the client.`);
+    } finally {
+      setLoading(false);
     }
   };
 
